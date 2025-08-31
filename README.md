@@ -6,7 +6,20 @@
 
 ## Description
 
-Crossplatform С++ project with SDL3 + RmlUi libraries
+Lightweight crossplatform С++ project with SDL3 + RmlUi libraries with light link libraries for Android
+
+# Platform Features
+
+1. Windows
+   * Static linking of the library is used
+   * The SDL3 libraries should already be statically compiled and are on the way `EXTERNAL_DIR` (See `Инструкция по сборке`)
+   * All Cmake see in `cmake/AppWindows.cmake`
+2. Android
+   * Build via Cmake + Ninja из Android Studio
+   * All Cmake see in `cmake/AppAndroid.cmake` 
+3. Linux
+   * There is currently no cmake build file for Android, you can send us a pull request with the file `AppLinux.cmake` if you are sure that it works.
+
 
 ## Dependencies
 
