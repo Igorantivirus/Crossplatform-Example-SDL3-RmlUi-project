@@ -1,0 +1,27 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug MSVC",
+      "type": "cppvsdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/build/${config:cmake.defaultVariants.buildType}/Android-SDL3-Example.exe",
+      "args": [],
+      "stopAtEntry": false,
+      "cwd": "${workspaceFolder}/app/src/main/assets",
+      "environment": [],
+      "console": "integratedTerminal",
+      "preLaunchTask": "CMake: Build"
+    },
+    {
+      "name": "Run",
+      "type": "cppvsdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/build/${config:cmake.defaultVariants.buildType}/Android-SDL3-Example.exe",
+      "preLaunchTask": "CMake: Build",
+      "args": [],
+      "cwd": "${workspaceFolder}/app/src/main/assets",
+      "console": "integratedTerminal"
+    }
+  ]
+}
