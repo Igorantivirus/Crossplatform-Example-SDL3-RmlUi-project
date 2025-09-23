@@ -18,7 +18,7 @@ Lightweight crossplatform С++ project with SDL3 + RmlUi libraries with light li
    * Build via Cmake + Ninja из Android Studio
    * All Cmake see in `cmake/AppAndroid.cmake` 
 3. Linux
-   * There is currently no cmake build file for Android, you can send us a pull request with the file `AppLinux.cmake` if you are sure that it works.
+   * There is currently no cmake build file for Linux, you can send us a pull request with the file `AppLinux.cmake` if you are sure that it works.
 
 
 ## Dependencies

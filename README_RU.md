@@ -18,7 +18,7 @@
    * Сборка через Cmake + Ninja из Android Studio
    * Весь Cmake смотри в файле `cmake/AppAndroid.cmake` 
 3. Linux
-   * В настоящий момент нет cmake файла для сборки под Android, вы можете отправить нам pull request с файлом `AppLinux.cmake`, если вы будете уверены, что она работает
+   * В настоящий момент нет cmake файла для сборки под Linux, вы можете отправить нам pull request с файлом `AppLinux.cmake`, если вы будете уверены, что она работает
 
 ## Зависимости
 
