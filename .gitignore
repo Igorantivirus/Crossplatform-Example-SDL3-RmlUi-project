@@ -11,6 +11,8 @@ local.properties
 
 .vscode
 app/build
+.clang-format
+.clangd
 
 
 
