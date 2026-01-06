@@ -12,6 +12,9 @@ set(INCLUDE_DIR "${PROJECT_SOURCE_DIR}/include")
 
 if(ANDROID)
   set(CMAKE_ABI ${CMAKE_ANDROID_ARCH_ABI})
+  if(CMAKE_BUILD_TYPE STREQUAL "RelWithDebInfo")
+    set(CMAKE_BUILD_TYPE "Release")
+  endif()
 endif()
 
 if(MSVC)
@@ -21,6 +24,8 @@ endif()
 set(RmlUi_DIR      "${EXTERNAL_DIR}/rmlui/${CMAKE_ABI}/${CMAKE_BUILD_TYPE}/lib/cmake/RmlUi")
 set(Freetype_DIR   "${EXTERNAL_DIR}/FreeType/${CMAKE_ABI}/${CMAKE_BUILD_TYPE}/lib/cmake/freetype")
 set(SDLWrapper_DIR "${EXTERNAL_DIR}/SDLWrapper/${CMAKE_ABI}/${CMAKE_BUILD_TYPE}/lib/cmake/SDLWrapper")
+
+message("Freetype_DIR=${Freetype_DIR}")
 
 if(NOT DEFINED EXTERNAL_DIR)
     message(ERROR EXTERNAL_DIR is not defined)
@@ -86,20 +91,13 @@ endif()
 
 if(ANDROID AND (CMAKE_BUILD_TYPE MATCHES "Release|MinSizeRel"))
   target_compile_options(${PROJECT_NAME} PRIVATE
-    -Oz
-    -ffunction-sections -fdata-sections
-    -fvisibility=hidden -fvisibility-inlines-hidden
-    -fmerge-all-constants
-    -fomit-frame-pointer
+          -O3
+          -ffunction-sections -fdata-sections
+          -fomit-frame-pointer
   )
   target_link_options(${PROJECT_NAME} PRIVATE
-    -Wl,--gc-sections
-    -Wl,--as-needed
-    -Wl,--strip-all
-    -Wl,--icf=all
-    -Wl,--exclude-libs,ALL
-    -Wl,--hash-style=gnu
-    -Wl,--pack-dyn-relocs=android+relr
+          -Wl,--gc-sections
+          -Wl,--as-needed
   )
 endif()
 
