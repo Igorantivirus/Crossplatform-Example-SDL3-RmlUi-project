@@ -3,25 +3,25 @@ plugins {
 }
 
 android {
-    namespace 'com.igorantivirus.new_sdl'
     compileSdk 35
+    namespace 'com.igorantivirus.new_sdl'
 
     buildFeatures { prefab true }
 
     defaultConfig {
         applicationId "com.igorantivirus.new_sdl"
-        minSdk 33
+        minSdk 26
         targetSdk 35
         versionCode 1
         versionName "1.0"
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         externalNativeBuild {
             cmake {
-                arguments "-DCMAKE_BUILD_TYPE=MinSizeRel", "-DEXTERNAL_DIR=\"D:/dev/libraries\""
+                arguments '-DEXTERNAL_DIR="D:/dev/libraries/_install"'
                 cppFlags '-std=c++23'
-                abiFilters 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64'
-//                abiFilters 'arm64-v8a'
+//                abiFilters 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64'
+//                abiFilters 'arm64-v8a', 'x86_64'
+                abiFilters 'arm64-v8a'
             }
         }
     }
@@ -43,23 +43,16 @@ android {
             path file('../CMakeLists.txt')
         }
     }
-    buildFeatures {
-        viewBinding true
+    sourceSets {
+        main {
+            assets {
+                srcDirs '../assets'
+            }
+        }
     }
 }
 
 dependencies {
-    implementation files('libs/SDL3-3.2.18.aar')
-    implementation files('libs/SDL3_image-3.2.4.aar')
-//    implementation files('libs/SDL3_ttf-3.2.0.aar')
-}
-
-dependencies {
-
-    implementation libs.appcompat
-    implementation libs.material
-    implementation libs.constraintlayout
-    testImplementation libs.junit
-    androidTestImplementation libs.ext.junit
-    androidTestImplementation libs.espresso.core
+    implementation files('libs/SDL3-3.4.0.aar')
+    implementation files('libs/SDL3_image-3.2.6.aar')
 }
