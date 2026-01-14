@@ -1,34 +1,6 @@
-
-
-#include <SDLWrapper/Math/Colors.hpp>
-#include <SDLWrapper/Math/Convert.hpp>
-#include <SDL3/SDL_events.h>
-#include <SDL3/SDL_init.h>
-#include <SDL3/SDL_keycode.h>
-#include <SDL3/SDL_loadso.h>
-#include <SDL3/SDL_log.h>
-#include <SDL3/SDL_oldnames.h>
-#include <SDL3/SDL_pixels.h>
-#include <SDL3/SDL_rect.h>
-#include <SDL3/SDL_render.h>
-#include <SDL3/SDL_scancode.h>
-#ifndef SDL_MAIN_USE_CALLBACKS
-#define SDL_MAIN_USE_CALLBACKS 1
-#endif
-
-#include <SDL3/SDL.h>
 #include <SDL3/SDL_main.h>
-
-#include <SDLWrapper/DrawTransformObjects/CircleShape.hpp>
-#include <SDLWrapper/DrawTransformObjects/EllipseShape.hpp>
-#include <SDLWrapper/DrawTransformObjects/RectangleShape.hpp>
-#include <SDLWrapper/DrawTransformObjects/Sprite.hpp>
-#include <SDLWrapper/Math/Operators.hpp>
-#include <SDLWrapper/Renders/RenderWindow.hpp>
-
-#include <SDLWrapper/Texture.hpp>
-
-using namespace sdl3::operators;
+#include <SDLWrapper/Math/Colors.hpp>
+#include <SDLWrapper/SDLWrapper.hpp>
 
 sdl3::RenderWindow window;
 sdl3::View view;
@@ -61,14 +33,15 @@ SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[])
     sprite1.setPosition({0, 0});
     sprite1.setUniformScale(2.f);
     sprite1.setOriginKeepPosition({texture.getSize().x / 2.f, texture.getSize().y / 2.f});
-    sprite1.setFilterColor(sdl3::Color::Blue);
+    sprite1.setFilterColor(sdl3::Colors::Blue);
 
     sprite2.setTexture(texture);
     sprite2.setPosition({100, 100});
-    sprite2.setOriginKeepPosition(sdl3::toFPoint(texture.getSize()) / 2.f);
+    
+    sprite2.setOriginKeepPosition(sdl3::Vector2f{texture.getSize().x / 2.f, texture.getSize().y / 2.f});
 
     rect.setSize({200.f, 120.f});
-    rect.setFillColor(sdl3::Color::Red);
+    rect.setFillColor(sdl3::Colors::Red);
     rect.setTexture(texture);
     rect.setPosition({300.f, 200.f});
     rect.setUniformScale(2);
@@ -77,14 +50,14 @@ SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[])
     circ.setRadius(50);
     circ.setTexture(texture);
     circ.setPosition({500, 200});
-    circ.setOutlineColor(sdl3::Color::Green);
+    circ.setOutlineColor(sdl3::Colors::Green);
     circ.setOutlineThickness(10);
     circ.setPointCount(2);
 
     elip.setPosition({600, 300});
     elip.setRadii({50, 70});
-    elip.setFillColor(sdl3::Color::Black);
-    elip.setOutlineColor(sdl3::Color::Red);
+    elip.setFillColor(sdl3::Colors::Black);
+    elip.setOutlineColor(sdl3::Colors::Red);
     elip.setOutlineThickness(5);
     elip.setTexture(texture);
     elip.setTextureRect({10, 10, 35, 35});
@@ -131,7 +104,7 @@ SDL_AppResult SDL_AppEvent(void *appstate, SDL_Event *event)
             window.setFullScreen(!window.isFullScreen());
             return SDL_APP_CONTINUE;
         }
-        SDL_FPoint pos = {};
+        sdl3::Vector2f pos = {};
         if (event->key.key == SDLK_W)
             pos.y -= 1;
         else if (event->key.key == SDLK_A)
@@ -143,6 +116,7 @@ SDL_AppResult SDL_AppEvent(void *appstate, SDL_Event *event)
         if (pos.x != 0.f || pos.y != 0.f)
         {
             sprite2.move(pos);
+            
             return SDL_APP_CONTINUE;
         }
 
@@ -157,7 +131,7 @@ SDL_AppResult SDL_AppEvent(void *appstate, SDL_Event *event)
 
         if (pos.x != 0.f || pos.y != 0.f)
         {
-            SDL_FPoint center = view.getCenterPosition();
+            sdl3::Vector2f center = view.getCenterPosition();
             view.setCenterPosition({center.x + pos.x, center.y + pos.y});
             window.setView(view);
             return SDL_APP_CONTINUE;
@@ -187,7 +161,7 @@ SDL_AppResult SDL_AppEvent(void *appstate, SDL_Event *event)
                 // view.setZoom(scale);
                 // window.setView(view);
 
-                SDL_FPoint scale = sprite2.getScale();
+                sdl3::Vector2f scale = sprite2.getScale();
                 scale.x *= 1.1f;
                 scale.y *= 1.1f;
                 sprite2.setScale(scale);
@@ -200,7 +174,7 @@ SDL_AppResult SDL_AppEvent(void *appstate, SDL_Event *event)
                 // view.setZoom(scale);
                 // window.setView(view);
 
-                SDL_FPoint scale = sprite2.getScale();
+                sdl3::Vector2f scale = sprite2.getScale();
                 scale.x /= 1.1f;
                 scale.y /= 1.1f;
                 sprite2.setScale(scale);
@@ -212,7 +186,7 @@ SDL_AppResult SDL_AppEvent(void *appstate, SDL_Event *event)
 
 SDL_AppResult SDL_AppIterate(void *appstate)
 {
-    window.clear(SDL_Color{255, 255, 255, 255});
+    window.clear(sdl3::Colors::White);
     window.draw(sprite1);
     window.draw(sprite2);
     window.draw(rect);
