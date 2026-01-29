@@ -1,3 +1,4 @@
+#include <SDL3/SDL_events.h>
 #include <SDL3/SDL_main.h>
 #include <SDLWrapper/Math/Colors.hpp>
 #include <SDLWrapper/SDLWrapper.hpp>
@@ -26,6 +27,7 @@ SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[])
     mode.height /= 2.f;
     bool res = window.create("window", mode);
     window.loadIconFromFile("ABS.png");
+    window.setLogicalPresentation({800,800});
 
     texture.loadFromFile("ABS.png");
 
@@ -76,6 +78,12 @@ SDL_AppResult SDL_AppEvent(void *appstate, SDL_Event *event)
     {
         window.close();
         return SDL_APP_SUCCESS;
+    }
+
+    if(event->type == SDL_EVENT_MOUSE_BUTTON_UP)
+    {
+        window.convertEventToRenderCoordinates(event);
+        SDL_Log("%f %f\n", event->button.x, event->button.y);
     }
     // return SDL_APP_CONTINUE;
     if (event->type == SDL_EVENT_KEY_DOWN)
